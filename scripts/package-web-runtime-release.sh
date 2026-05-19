@@ -183,17 +183,172 @@ package_zip() {
   (cd "$(dirname "$target_dir")" && zip -X -qr "$zip_path" "$(basename "$target_dir")")
 }
 
+write_macos_app_launcher() {
+  local app_dir="$1"
+  mkdir -p "$app_dir/Contents/MacOS" "$app_dir/Contents/Resources"
+  cat > "$app_dir/Contents/Info.plist" <<'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>zh_CN</string>
+  <key>CFBundleDisplayName</key>
+  <string>Morpheus</string>
+  <key>CFBundleExecutable</key>
+  <string>Morpheus</string>
+  <key>CFBundleIdentifier</key>
+  <string>io.morpheus.web</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>Morpheus</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0.1.0</string>
+  <key>CFBundleVersion</key>
+  <string>0.1.0</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>12.0</string>
+</dict>
+</plist>
+PLIST
+  cat > "$app_dir/Contents/MacOS/Morpheus" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+APP_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+PAYLOAD_DIR="$APP_DIR/Resources/app"
+cd "$PAYLOAD_DIR"
+export HOST="${HOST:-127.0.0.1}"
+export PORT="${PORT:-2199}"
+URL="http://127.0.0.1:${PORT}/"
+HEALTH_URL="http://127.0.0.1:${PORT}/api/health"
+NODE_BIN="./runtime/node"
+
+if "$NODE_BIN" -e "const http=require('http');const req=http.get(process.argv[1],res=>process.exit(res.statusCode===200?0:1));req.on('error',()=>process.exit(1));req.setTimeout(700,()=>{req.destroy();process.exit(1);});" "$HEALTH_URL" >/dev/null 2>&1; then
+  open "$URL" >/dev/null 2>&1 || true
+  exit 0
+fi
+
+"$NODE_BIN" server.js &
+SERVER_PID="$!"
+trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' INT TERM EXIT
+for _ in $(seq 1 40); do
+  if "$NODE_BIN" -e "const http=require('http');const req=http.get(process.argv[1],res=>process.exit(res.statusCode===200?0:1));req.on('error',()=>process.exit(1));req.setTimeout(700,()=>{req.destroy();process.exit(1);});" "$HEALTH_URL" >/dev/null 2>&1; then
+    open "$URL" >/dev/null 2>&1 || true
+    wait "$SERVER_PID"
+    exit $?
+  fi
+  sleep 0.5
+done
+wait "$SERVER_PID"
+SH
+  chmod +x "$app_dir/Contents/MacOS/Morpheus"
+}
+
+package_macos_installers() {
+  local target_dir="$1"
+  local name="$2"
+  local app_stage="$OUT_DIR/$name-app-stage"
+  local pkg_stage="$OUT_DIR/$name-pkg-stage"
+  local dmg_stage="$OUT_DIR/$name-dmg-stage"
+  local app_dir="$app_stage/Morpheus.app"
+  local pkg_path="$OUT_DIR/$name.pkg"
+  local dmg_path="$OUT_DIR/$name.dmg"
+
+  rm -rf "$app_stage" "$pkg_stage" "$dmg_stage" "$pkg_path" "$dmg_path"
+  write_macos_app_launcher "$app_dir"
+  rsync -a --exclude='.DS_Store' "$target_dir/" "$app_dir/Contents/Resources/app/"
+
+  mkdir -p "$pkg_stage/Applications" "$dmg_stage"
+  rsync -a --exclude='.DS_Store' "$app_dir" "$pkg_stage/Applications/"
+  rsync -a --exclude='.DS_Store' "$app_dir" "$dmg_stage/"
+
+  if command -v pkgbuild >/dev/null 2>&1; then
+    pkgbuild \
+      --root "$pkg_stage" \
+      --identifier "io.morpheus.web" \
+      --version "0.1.0" \
+      --install-location "/" \
+      "$pkg_path" >/dev/null
+    log "macOS installer: $pkg_path"
+  fi
+
+  if command -v hdiutil >/dev/null 2>&1; then
+    hdiutil create \
+      -volname "Morpheus" \
+      -srcfolder "$dmg_stage" \
+      -ov \
+      -format UDZO \
+      "$dmg_path" >/dev/null
+    log "macOS disk image: $dmg_path"
+  fi
+}
+
+package_windows_installer() {
+  local target_dir="$1"
+  local name="$2"
+  local nsi_path="$OUT_DIR/$name.nsi"
+  local exe_path="$OUT_DIR/$name-Setup.exe"
+
+  if ! command -v makensis >/dev/null 2>&1; then
+    log "Windows installer skipped: makensis is not installed"
+    return 0
+  fi
+
+  rm -f "$nsi_path" "$exe_path"
+  cat > "$nsi_path" <<NSI
+Unicode true
+Name "Morpheus"
+OutFile "$exe_path"
+InstallDir "\$LOCALAPPDATA\\Morpheus"
+RequestExecutionLevel user
+
+Page directory
+Page instfiles
+UninstPage uninstConfirm
+UninstPage instfiles
+
+Section "Install"
+  SetOutPath "\$INSTDIR"
+  File /r "$target_dir/*"
+  WriteUninstaller "\$INSTDIR\\Uninstall Morpheus.exe"
+  CreateDirectory "\$SMPROGRAMS\\Morpheus"
+  CreateShortCut "\$SMPROGRAMS\\Morpheus\\Morpheus.lnk" "\$INSTDIR\\Morpheus.bat"
+  CreateShortCut "\$DESKTOP\\Morpheus.lnk" "\$INSTDIR\\Morpheus.bat"
+SectionEnd
+
+Section "Uninstall"
+  Delete "\$DESKTOP\\Morpheus.lnk"
+  Delete "\$SMPROGRAMS\\Morpheus\\Morpheus.lnk"
+  RMDir "\$SMPROGRAMS\\Morpheus"
+  RMDir /r "\$INSTDIR"
+SectionEnd
+NSI
+
+  makensis "$nsi_path" >/dev/null
+  rm -f "$nsi_path"
+  log "Windows installer: $exe_path"
+}
+
 download_node_windows_x64() {
   local node_zip="$CACHE_DIR/node-v$NODE_VERSION-win-x64.zip"
   local node_dir="$CACHE_DIR/node-v$NODE_VERSION-win-x64"
   mkdir -p "$CACHE_DIR"
   if [[ ! -f "$node_zip" ]]; then
     log "downloading Node v$NODE_VERSION for Windows x64"
-    curl -fL "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-win-x64.zip" -o "$node_zip"
+    rm -f "$node_zip"
+    curl --retry 4 --retry-delay 2 --retry-all-errors -fL \
+      "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-win-x64.zip" \
+      -o "$node_zip"
   fi
   if [[ ! -f "$node_dir/node.exe" ]]; then
     rm -rf "$node_dir"
-    unzip -q "$node_zip" -d "$CACHE_DIR"
+    unzip -q "$node_zip" -d "$CACHE_DIR" || {
+      rm -f "$node_zip"
+      fail "failed to unpack Windows Node runtime"
+    }
   fi
   [[ -f "$node_dir/node.exe" ]] || fail "Windows node.exe not found after download"
   printf '%s\n' "$node_dir/node.exe"
@@ -210,6 +365,7 @@ build_macos_arm64() {
   write_macos_launcher "$target_dir"
   write_readme "$target_dir" "macos-arm64"
   package_zip "$target_dir" "$zip_path"
+  package_macos_installers "$target_dir" "$name"
   log "macOS package: $zip_path"
 }
 
@@ -225,6 +381,7 @@ build_windows_x64() {
   write_windows_launcher "$target_dir"
   write_readme "$target_dir" "windows-x64"
   package_zip "$target_dir" "$zip_path"
+  package_windows_installer "$target_dir" "$name"
   log "Windows package: $zip_path"
 }
 

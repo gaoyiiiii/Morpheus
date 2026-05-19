@@ -69,8 +69,10 @@ function resolveMorphStoragePaths(options = {}) {
   const homedirValue = typeof options.homedir === 'function' ? options.homedir() : options.homedir;
   const homedir = toResolvedPath(homedirValue || os.homedir()) || os.homedir();
 
-  const iCloudRoot = path.join(homedir, 'Library', 'Mobile Documents', 'com~apple~CloudDocs', 'Morph');
-  const documentsRoot = path.join(homedir, 'Documents', 'Morph');
+  const iCloudRoot = path.join(homedir, 'Library', 'Mobile Documents', 'com~apple~CloudDocs', 'Morpheus');
+  const legacyICloudRoot = path.join(homedir, 'Library', 'Mobile Documents', 'com~apple~CloudDocs', 'Morph');
+  const documentsRoot = path.join(homedir, 'Documents', 'Morpheus');
+  const legacyDocumentsRoot = path.join(homedir, 'Documents', 'Morph');
   const repoFallbackLiveDataFile = path.join(rootDir, 'data', 'live-data.json');
 
   const explicitSyncRoot = [
@@ -83,6 +85,8 @@ function resolveMorphStoragePaths(options = {}) {
   const preferredSyncRoot = [
     iCloudRoot,
     documentsRoot,
+    legacyICloudRoot,
+    legacyDocumentsRoot,
   ].find((candidate) => existsSyncSafe(existsSync, path.join(candidate, 'data', 'live-data.json'))) || '';
 
   const explicitLiveDataFile = toResolvedPath(env.MORPH_LIVE_DATA_FILE);
