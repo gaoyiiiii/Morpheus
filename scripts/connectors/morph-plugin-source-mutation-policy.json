@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "pluginOwnedFiles": [
+    {
+      "path": "extensions/{pluginId}/manifest.json",
+      "allowOperations": ["upsert_file", "search_replace"]
+    },
+    {
+      "path": "extensions/{pluginId}/README.md",
+      "allowOperations": ["upsert_file", "create_file", "search_replace"]
+    },
+    {
+      "path": "assets/js/{pluginId}-runtime.js",
+      "allowOperations": ["upsert_file", "create_file", "search_replace"]
+    },
+    {
+      "path": "scripts/contracts/test-{pluginId}-plugin-smoke.js",
+      "allowOperations": ["upsert_file", "create_file", "search_replace"]
+    }
+  ],
+  "conditionalHostFiles": [
+    {
+      "path": "assets/js/local-plugin-workspace-runtime.js",
+      "when": "missing-workspace-integration",
+      "allowOperations": ["search_replace"]
+    },
+    {
+      "path": "morph.html",
+      "when": "missing-workspace-integration",
+      "allowOperations": ["search_replace"]
+    }
+  ]
+}

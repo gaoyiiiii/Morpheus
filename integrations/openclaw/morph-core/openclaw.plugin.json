@@ -1,0 +1,50 @@
+{
+  "id": "morph-core",
+  "name": "Morpheus Core",
+  "description": "Official Morpheus OpenClaw connector for calling Morpheus Query/Action APIs.",
+  "version": "0.1.0",
+  "skills": [
+    "./skills"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "baseUrl": {
+        "type": "string",
+        "minLength": 1
+      },
+      "defaultActor": {
+        "type": "string"
+      },
+      "defaultSource": {
+        "type": "string"
+      },
+      "timeoutMs": {
+        "type": "integer",
+        "minimum": 1000,
+        "maximum": 60000
+      }
+    },
+    "required": [
+      "baseUrl"
+    ]
+  },
+  "uiHints": {
+    "plugins.entries.morph-core.config.baseUrl": {
+      "label": "Morpheus Base URL",
+      "placeholder": "http://127.0.0.1:2199"
+    },
+    "plugins.entries.morph-core.config.defaultActor": {
+      "label": "Default Actor",
+      "placeholder": "openclaw"
+    },
+    "plugins.entries.morph-core.config.defaultSource": {
+      "label": "Default Source",
+      "placeholder": "skill:morph-core"
+    },
+    "plugins.entries.morph-core.config.timeoutMs": {
+      "label": "Request Timeout (ms)"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@morph/openclaw-morph-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Official Morpheus OpenClaw connector package for Morpheus Query/Action APIs.",
+  "openclaw": {
+    "extensions": [
+      "./src/index.mjs"
+    ]
+  }
+}

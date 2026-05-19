@@ -1,0 +1,12 @@
+{
+  "name": "@morph/template-openclaw-morph-connector",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Starter template for building a custom OpenClaw connector against Morpheus APIs.",
+  "openclaw": {
+    "extensions": [
+      "./src/index.mjs"
+    ]
+  }
+}

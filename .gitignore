@@ -1,0 +1,52 @@
+# OS / editor noise
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Local temp/cache
+.tmp/
+tmp/
+*.tmp
+
+# Build artifacts
+*.dmg
+*.zip
+.build-ios/
+.derived/
+ios-app/build/
+ios-app/build-*/
+ios-app/DerivedData/
+macos-app/.build-*/
+
+# Xcode user state
+ios-app/*.xcodeproj/project.xcworkspace/xcuserdata/
+ios-app/*.xcodeproj/xcuserdata/
+ios-app/*.xcworkspace/xcuserdata/
+
+# Local runtime logs / snapshots
+data/*.config.json
+!data/*.config.example.json
+data/*.state.json
+data/*.log
+data/*.out.log
+data/*.err.log
+data/*.ndjson
+data/*.bak*
+data/*backup*
+data/ai-memory-backups/
+data/extensions/*/state.json
+data/feishu-conversations.json
+data/*.launchd.out.log
+data/*.launchd.err.log
+data/proactive-agent.worker.log
+data/proactive-agent-events.ndjson
+data/live-data.from-terminal.json
+data/morph-owner-loop.last-message.txt
+data/shards/
+data/tmp-*
+morph_md_mirror/**/.DS_Store
+
+# Build artifacts (dist)
+dist/openclaw/
+dist/public-repo/

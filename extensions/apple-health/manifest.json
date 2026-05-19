@@ -1,0 +1,102 @@
+{
+  "id": "apple-health",
+  "kind": "integration",
+  "source": "official",
+  "name": "Apple 健康（HealthKit）",
+  "summary": "在 iPhone 上读取 HealthKit 摘要，并同步到 Morpheus 的健康视图与 AI 上下文",
+  "icon": "heart-pulse",
+  "version": "1.0.0",
+  "entry": "extensions/apple-health/README.md",
+  "description": "这个扩展会在 Morpheus iOS 原生壳内通过 HealthKit 读取步数、活动能量、心率、睡眠、体重与血糖等摘要，并把结果同步进 Morpheus。\n配置入口只保留授权和同步动作；详细数据请在健康页或 Apple 健康详情工作台查看。",
+  "category": "integration",
+  "owner": "official",
+  "tags": ["health", "apple-health", "healthkit", "ios", "official"],
+  "settingsTarget": "apple-health",
+  "visibilityTargets": ["health-tab", "health-view", "apple-health-settings"],
+  "hostIntegration": {
+    "entryCommandId": "open-apple-health-workspace",
+    "workspaceHeaderActions": [
+      {
+        "id": "apple-health-open-settings",
+        "label": "配置",
+        "icon": "settings-2",
+        "commandId": "open-extension-settings",
+        "variant": "ghost"
+      },
+      {
+        "id": "apple-health-open-health",
+        "label": "去健康页",
+        "icon": "heart-pulse",
+        "commandId": "open-health-tab",
+        "variant": "ghost"
+      }
+    ],
+    "settingsSection": {
+      "id": "apple-health-settings-section",
+      "label": "Apple 健康",
+      "icon": "heart-pulse",
+      "commandId": "open-extension-settings"
+    }
+  },
+  "dataModel": {
+    "namespace": "apple-health",
+    "state": "shared-domain",
+    "stateKey": "appleHealthSync",
+    "history": "file-backed",
+    "syncPolicy": "inherit-root",
+    "sharedDomains": ["appleHealthSync"]
+  },
+  "defaultEnabled": false,
+  "requiresConfiguration": true,
+  "ui": {
+    "detailMode": "embedded",
+    "primaryAction": "open-workspace",
+    "workspaceShell": {
+      "eyebrow": "官方扩展工作台",
+      "title": "Apple 健康",
+      "description": "查看从 HealthKit 同步到 Morpheus 的活动、心率、睡眠与生理摘要。",
+      "backLabel": "返回扩展中心"
+    }
+  },
+  "requires": {
+    "accounts": [],
+    "devices": ["iPhone"],
+    "runtimeCapabilities": ["health-view", "ios-native-bridge"]
+  },
+  "permissions": [
+    {
+      "id": "health.read.apple-health",
+      "label": "读取 Apple Health / HealthKit 摘要",
+      "required": true,
+      "scope": "health",
+      "aiReadable": true
+    },
+    {
+      "id": "ui.mount.health",
+      "label": "显示 Apple 健康入口与详情",
+      "required": true,
+      "scope": "ui"
+    }
+  ],
+  "commands": [
+    {
+      "id": "open-apple-health-workspace",
+      "label": "打开 Apple 健康详情",
+      "icon": "heart-pulse",
+      "action": "open-workspace"
+    },
+    {
+      "id": "open-extension-settings",
+      "label": "打开 Apple 健康配置",
+      "icon": "settings-2",
+      "action": "open-settings"
+    },
+    {
+      "id": "open-health-tab",
+      "label": "打开健康页",
+      "icon": "heart-pulse",
+      "action": "switch-tab",
+      "target": "health"
+    }
+  ]
+}

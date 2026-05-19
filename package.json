@@ -1,0 +1,32 @@
+{
+  "name": "morpheus",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i assets/styles/app.tailwind.input.css -o assets/styles/app.compiled.css",
+    "build:excalidraw-host": "node scripts/build-excalidraw-host.mjs",
+    "build:thought-graph-vendor": "node scripts/build-thought-graph-vendor.mjs",
+    "build": "npm run build:css && npm run build:excalidraw-host && npm run build:thought-graph-vendor",
+    "start": "node server.js",
+    "dev": "npm run build:css && node server.js",
+    "web:package:runtime": "bash scripts/package-web-runtime-release.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Morpheus — 个人念头与知识管理 + AI 对话一体化应用",
+  "devDependencies": {
+    "esbuild": "^0.27.4",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
+    "@larksuiteoapi/node-sdk": "^1.60.0",
+    "d3-force": "^3.0.0",
+    "pixi.js": "^8.17.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^3.4.17"
+  },
+  "private": false
+}

@@ -1,0 +1,596 @@
+{
+  "version": 1,
+  "updatedAt": "2026-03-13",
+  "modules": [
+    {
+      "id": "experience-web",
+      "label": "Experience Web",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "morph.html",
+        "assets/js/app.js",
+        "assets/js/style-loader.js",
+        "assets/styles/"
+      ],
+      "owns": [
+        "web-ui",
+        "interaction-flow",
+        "view-rendering"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-runtime-modules",
+      "label": "Frontend Runtime Modules",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/runtime-modules.js"
+      ],
+      "owns": [
+        "runtime-loader",
+        "skill-selector",
+        "runtime-inspection"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-extensions-runtime",
+      "label": "Frontend Extensions Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/extensions-runtime.js",
+        "extensions/manifest.json"
+      ],
+      "owns": [
+        "extension-catalog-loading",
+        "extension-card-rendering",
+        "extension-detail-rendering",
+        "extension-source-layering",
+        "manifest-visibility-routing",
+        "official-extension-runtime"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-extension-settings-runtime",
+      "label": "Frontend Extension Settings Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/extension-settings-runtime.js"
+      ],
+      "owns": [
+        "extension-detail-shell",
+        "extension-permissions-panel",
+        "extension-settings-container"
+      ],
+      "shouldMoveToward": "apps/web/extensions"
+    },
+    {
+      "id": "frontend-atlas-plugin-runtime",
+      "label": "Frontend Atlas Plugin Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/atlas-plugin-runtime.js",
+        "extensions/atlas/manifest.json"
+      ],
+      "owns": [
+        "channel-ops-workspace-runtime",
+        "atlas-plugin-compatibility",
+        "workspace-view-rendering"
+      ],
+      "shouldMoveToward": "apps/web/extensions"
+    },
+    {
+      "id": "frontend-local-plugin-workspace-runtime",
+      "label": "Frontend Local Plugin Workspace Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/local-plugin-workspace-runtime.js",
+        "extensions/local-manifest.json",
+        "extensions/example-plugin/"
+      ],
+      "owns": [
+        "local-plugin-workspace-view",
+        "local-plugin-readme-preview",
+        "local-plugin-bootstrap"
+      ],
+      "shouldMoveToward": "apps/web/extensions"
+    },
+    {
+      "id": "frontend-glucose-extension-runtime",
+      "label": "Frontend Glucose Extension Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/glucose-extension-runtime.js"
+      ],
+      "owns": [
+        "glucose-extension-compatibility",
+        "glucose-extension-toggle-behavior",
+        "glucose-feature-gating"
+      ],
+      "shouldMoveToward": "apps/web/extensions"
+    },
+    {
+      "id": "frontend-glucose-settings-runtime",
+      "label": "Frontend Glucose Settings Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/glucose-settings-runtime.js"
+      ],
+      "owns": [
+        "glucose-settings-modal",
+        "glucose-settings-fetch-save",
+        "glucose-settings-state-sync"
+      ],
+      "shouldMoveToward": "apps/web/extensions"
+    },
+    {
+      "id": "frontend-feishu-settings-runtime",
+      "label": "Frontend Feishu Settings Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/feishu-settings-runtime.js"
+      ],
+      "owns": [
+        "feishu-settings-modal",
+        "feishu-settings-fetch-save",
+        "feishu-settings-state-sync"
+      ],
+      "shouldMoveToward": "apps/web/extensions"
+    },
+    {
+      "id": "frontend-web-search-provider-runtime",
+      "label": "Frontend Web Search Provider Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/web-search-provider-runtime.js",
+        "interfaces/web-search.d.ts"
+      ],
+      "owns": [
+        "web-search-provider-registry",
+        "provider-selection",
+        "builtin-search-adapter"
+      ],
+      "shouldMoveToward": "apps/web/search"
+    },
+    {
+      "id": "frontend-settings-sections-runtime",
+      "label": "Frontend Settings Sections Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/settings-sections-runtime.js"
+      ],
+      "owns": [
+        "settings-summary-cards",
+        "settings-section-metadata"
+      ],
+      "shouldMoveToward": "apps/web/settings"
+    },
+    {
+      "id": "frontend-settings-detail-runtime",
+      "label": "Frontend Settings Detail Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/settings-detail-runtime.js"
+      ],
+      "owns": [
+        "settings-detail-markup",
+        "ai-skills-detail-view",
+        "runtime-rules-detail-view"
+      ],
+      "shouldMoveToward": "apps/web/settings"
+    },
+    {
+      "id": "frontend-settings-modal-runtime",
+      "label": "Frontend Settings Modal Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/settings-modal-runtime.js"
+      ],
+      "owns": [
+        "settings-modal-shell",
+        "settings-modal-state-sync",
+        "settings-modal-actions"
+      ],
+      "shouldMoveToward": "apps/web/settings"
+    },
+    {
+      "id": "frontend-settings-actions-runtime",
+      "label": "Frontend Settings Actions Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/settings-actions-runtime.js"
+      ],
+      "owns": [
+        "settings-save-actions",
+        "sync-root-actions",
+        "theme-and-provider-actions"
+      ],
+      "shouldMoveToward": "apps/web/settings"
+    },
+    {
+      "id": "frontend-settings-render-runtime",
+      "label": "Frontend Settings Render Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/settings-render-runtime.js"
+      ],
+      "owns": [
+        "settings-summary-hydration",
+        "settings-status-badges",
+        "settings-form-field-sync"
+      ],
+      "shouldMoveToward": "apps/web/settings"
+    },
+    {
+      "id": "frontend-settings-controller-runtime",
+      "label": "Frontend Settings Controller Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/settings-controller-runtime.js"
+      ],
+      "owns": [
+        "settings-event-binding",
+        "settings-input-controller",
+        "settings-modal-entrypoints"
+      ],
+      "shouldMoveToward": "apps/web/settings"
+    },
+    {
+      "id": "frontend-legacy-writing-runtime",
+      "label": "Frontend Legacy Writing Runtime",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/legacy-writing-runtime.js"
+      ],
+      "owns": [
+        "legacy-writing-migration-notices",
+        "legacy-writing-settings-shell",
+        "legacy-writing-compatibility-delegation"
+      ],
+      "shouldMoveToward": "apps/web/legacy"
+    },
+    {
+      "id": "frontend-legacy-writing-data",
+      "label": "Frontend Legacy Writing Data",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/legacy-writing-data.js"
+      ],
+      "owns": [
+        "legacy-writing-data-shape",
+        "legacy-writing-sanitization",
+        "legacy-writing-indexing"
+      ],
+      "shouldMoveToward": "apps/web/legacy"
+    },
+    {
+      "id": "frontend-skill-context",
+      "label": "Frontend Skill Context",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/skill-context.js"
+      ],
+      "owns": [
+        "skill-body-loading",
+        "skill-prompt-context"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-ai-orchestration",
+      "label": "Frontend AI Orchestration",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/ai-orchestration.js"
+      ],
+      "owns": [
+        "attachment-normalization",
+        "ai-execution-context"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-ai-prompt-builder",
+      "label": "Frontend AI Prompt Builder",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/ai-prompt-builder.js"
+      ],
+      "owns": [
+        "system-prompt-policy",
+        "prompt-assembly"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-ai-response-handler",
+      "label": "Frontend AI Response Handler",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/ai-response-handler.js"
+      ],
+      "owns": [
+        "streaming-reply-merge",
+        "reply-normalization",
+        "assistant-meta-assembly"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-ai-chat-controller",
+      "label": "Frontend AI Chat Controller",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/ai-chat-controller.js"
+      ],
+      "owns": [
+        "send-flow-preparation",
+        "onboarding-routing",
+        "post-send-cleanup"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "frontend-ai-composer-commands",
+      "label": "AI Composer Slash and At-Tokens",
+      "layer": "experience",
+      "kind": "implementation",
+      "paths": [
+        "assets/js/ai-composer-commands-runtime.js",
+        "assets/js/ai-composer-autocomplete-runtime.js"
+      ],
+      "owns": [
+        "composer-slash-parse",
+        "composer-at-scope-hints",
+        "composer-help-local-dispatch",
+        "composer-slash-autocomplete-ui",
+        "composer-at-project-fuzzy-ui"
+      ],
+      "shouldMoveToward": "apps/web"
+    },
+    {
+      "id": "core-data-storage",
+      "label": "Core Data and Storage",
+      "layer": "core",
+      "kind": "contract-and-implementation",
+      "paths": [
+        "assets/js/storage.js",
+        "scripts/markdown-mirror-lib.js",
+        "interfaces/core-data.d.ts"
+      ],
+      "owns": [
+        "data-shape",
+        "local-storage",
+        "snapshot-normalization"
+      ],
+      "shouldMoveToward": "packages/core-data"
+    },
+    {
+      "id": "runtime-config",
+      "label": "Runtime Config",
+      "layer": "runtime",
+      "kind": "configuration",
+      "paths": [
+        "morph-runtime/skills.json",
+        "morph-runtime/context-rules.json",
+        "morph-runtime/memory-rules.md",
+        "interfaces/runtime.d.ts"
+      ],
+      "owns": [
+        "runtime-defaults",
+        "context-rules",
+        "memory-rules"
+      ],
+      "shouldMoveToward": "packages/core-runtime"
+    },
+    {
+      "id": "config-loaders",
+      "label": "Config Loaders",
+      "layer": "contracts",
+      "kind": "contract-and-implementation",
+      "paths": [
+        "assets/js/config-loader.js",
+        "scripts/contracts/load-config.js"
+      ],
+      "owns": [
+        "config-normalization",
+        "runtime-loading",
+        "skill-catalog-loading"
+      ],
+      "shouldMoveToward": "packages/contracts"
+    },
+    {
+      "id": "skills-content",
+      "label": "Skills Content",
+      "layer": "skills",
+      "kind": "content",
+      "paths": [
+        "skills/manifest.json",
+        "skills/"
+      ],
+      "owns": [
+        "skill-catalog",
+        "skill-content",
+        "skill-references"
+      ],
+      "shouldMoveToward": "skills/"
+    },
+    {
+      "id": "local-server",
+      "label": "Local Server",
+      "layer": "orchestration",
+      "kind": "implementation",
+      "paths": [
+        "server.js"
+      ],
+      "owns": [
+        "static-serving",
+        "local-api",
+        "sync-entrypoint",
+        "integration-entrypoint"
+      ],
+      "shouldMoveToward": "services/local-server"
+    },
+    {
+      "id": "integrations",
+      "label": "Integrations",
+      "layer": "integration",
+      "kind": "implementation",
+      "paths": [
+        "scripts/connectors/agent-store.js",
+        "scripts/connectors/glucose-config-store.js",
+        "scripts/connectors/feishu-store.js",
+        "scripts/glucose-bridge.js",
+        "scripts/reminder-sync-lan.js"
+      ],
+      "owns": [
+        "health-connectors",
+        "external-sync",
+        "provider-adapters"
+      ],
+      "shouldMoveToward": "packages/provider-adapters"
+    },
+    {
+      "id": "integration-api-handlers",
+      "label": "Integration API Handlers",
+      "layer": "integration",
+      "kind": "implementation",
+      "paths": [
+        "scripts/connectors/agent-api.js",
+        "scripts/connectors/glucose-api.js",
+        "scripts/connectors/feishu-api.js"
+      ],
+      "owns": [
+        "integration-route-handlers",
+        "connector-api-flow"
+      ],
+      "shouldMoveToward": "services/local-server"
+    },
+    {
+      "id": "integration-atlas-store",
+      "label": "Integration Atlas Store",
+      "layer": "integration",
+      "kind": "implementation",
+      "paths": [
+        "scripts/connectors/atlas-store.js",
+        "scripts/connectors/atlas-api.js"
+      ],
+      "owns": [
+        "channel-ops-payload-building",
+        "channel-ops-doc-reading",
+        "atlas-api-routing"
+      ],
+      "shouldMoveToward": "services/local-server"
+    },
+    {
+      "id": "proactive-runtime",
+      "label": "Proactive Runtime",
+      "layer": "runtime",
+      "kind": "implementation",
+      "paths": [
+        "scripts/proactive-agent-worker.js"
+      ],
+      "owns": [
+        "heartbeat-scan",
+        "digest-generation",
+        "runtime-jobs"
+      ],
+      "shouldMoveToward": "packages/core-runtime"
+    },
+    {
+      "id": "native-shells",
+      "label": "Native Shells",
+      "layer": "native",
+      "kind": "implementation",
+      "paths": [
+        "macos-app/",
+        "ios-app/"
+      ],
+      "owns": [
+        "platform-shell",
+        "native-bridge",
+        "device-integration"
+      ],
+      "shouldMoveToward": "apps/macos,apps/ios"
+    },
+    {
+      "id": "tooling-ops",
+      "label": "Tooling and Ops",
+      "layer": "tooling",
+      "kind": "implementation",
+      "paths": [
+        "scripts/skills/",
+        "scripts/import-markdown.js",
+        "scripts/legacy/archive-writing-studio.js",
+        "scripts/recover-from-markdown.js",
+        "scripts/sync-markdown.js",
+        "scripts/write-flash-thoughts-markdown.js",
+        "scripts/install-proactive-agent-launchd.sh",
+        "scripts/install-server-launchd.sh",
+        "scripts/uninstall-proactive-agent-launchd.sh",
+        "scripts/uninstall-server-launchd.sh",
+        "scripts/writing/"
+      ],
+      "owns": [
+        "validation",
+        "packaging",
+        "migration-tools",
+        "ops-scripts"
+      ],
+      "shouldMoveToward": "scripts/"
+    },
+    {
+      "id": "contracts",
+      "label": "Contracts",
+      "layer": "contracts",
+      "kind": "contract",
+      "paths": [
+        "interfaces/"
+      ],
+      "owns": [
+        "shared-types",
+        "contracts-checks"
+      ],
+      "shouldMoveToward": "packages/contracts"
+    },
+    {
+      "id": "planning-docs",
+      "label": "Planning Docs",
+      "layer": "docs",
+      "kind": "documentation",
+      "paths": [
+        "docs/"
+      ],
+      "owns": [
+        "product-planning",
+        "architecture-notes",
+        "execution-guides"
+      ],
+      "shouldMoveToward": "docs/"
+    }
+  ]
+}

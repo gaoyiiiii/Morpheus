@@ -1,0 +1,95 @@
+{
+  "id": "fleeting-station",
+  "kind": "workspace",
+  "source": "official",
+  "name": "闪念坞",
+  "version": "0.1.0",
+  "summary": "右侧抽屉工作台，用来暂存、搜索和重组闪念",
+  "entry": "host://fleeting-drawer",
+  "ui": {
+    "detailMode": "embedded",
+    "primaryAction": "open-drawer"
+  },
+  "description": "把闪念坞作为官方扩展注册到宿主里，而不是继续只靠宿主硬编码按钮。它当前仍复用宿主已有的右侧抽屉实现。",
+  "category": "workspace",
+  "owner": "official",
+  "visibilityTargets": [
+    "drawer",
+    "sidebar-footer"
+  ],
+  "hostIntegration": {
+    "platforms": [
+      "desktop"
+    ],
+    "entryCommandId": "toggle-fleeting-drawer",
+    "drawerEntry": {
+      "drawerId": "fleeting",
+      "label": "闪念坞",
+      "icon": "git-branch",
+      "platforms": [
+        "desktop"
+      ]
+    },
+    "sidebarFooterEntry": {
+      "label": "闪念坞",
+      "icon": "git-branch",
+      "platforms": [
+        "desktop"
+      ]
+    },
+    "mobileMoreEntry": {
+      "label": "闪念坞",
+      "icon": "git-branch",
+      "platforms": [
+        "mobile"
+      ]
+    }
+  },
+  "dataModel": {
+    "namespace": "fleeting-station",
+    "state": "shared-domain",
+    "stateKey": "flashThoughts",
+    "history": "root-inline",
+    "syncPolicy": "inherit-root",
+    "sharedDomains": [
+      "flashThoughts",
+      "fixedThoughts"
+    ]
+  },
+  "requires": {
+    "accounts": [],
+    "devices": [],
+    "runtimeCapabilities": [
+      "workspace-drawer",
+      "flash-thoughts"
+    ]
+  },
+  "permissions": [
+    {
+      "id": "ui.mount.drawer",
+      "label": "显示右侧抽屉工作台",
+      "required": true,
+      "scope": "ui"
+    },
+    {
+      "id": "data.read.flash-thoughts",
+      "label": "读取闪念与分组",
+      "required": true,
+      "scope": "data"
+    }
+  ],
+  "commands": [
+    {
+      "id": "toggle-fleeting-drawer",
+      "label": "切换闪念坞",
+      "icon": "git-branch",
+      "action": "open-drawer",
+      "target": "fleeting"
+    }
+  ],
+  "notes": [
+    "当前阶段仍直接复用宿主已有的 fleeting drawer 实现。",
+    "下一步可继续把抽屉标题、搜索、动作和渲染能力拆成扩展运行时。"
+  ],
+  "defaultEnabled": true
+}

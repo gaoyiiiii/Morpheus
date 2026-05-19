@@ -1,0 +1,119 @@
+{
+  "version": 2,
+  "updatedAt": "2026-03-13",
+  "extensions": [
+    {
+      "id": "my-local-plugin",
+      "kind": "custom-plugin",
+      "source": "local",
+      "name": "我的本地扩展",
+      "summary": "本地自定义扩展模板",
+      "icon": "puzzle",
+      "entry": "extensions/example-plugin/manifest.json",
+      "description": "这是一个最小可跑通的本地扩展示例，用来验证 Morpheus 已经能从本地目录发现并展示自定义扩展。 如果你想自己接工作台、团队工具或行业流程，可以从它开始改。",
+      "category": "workspace",
+      "owner": "local-user",
+      "tags": ["local", "custom-plugin"],
+      "settingsTarget": "my-local-plugin",
+      "visibilityTargets": [],
+      "hostIntegration": {
+        "entryCommandId": "open-my-extension-workspace",
+        "sidebarEntry": {
+          "label": "我的扩展",
+          "icon": "puzzle",
+          "platforms": ["desktop"]
+        },
+        "mobileMoreEntry": {
+          "label": "我的扩展",
+          "icon": "puzzle",
+          "platforms": ["mobile"]
+        },
+        "contextPanels": [
+          {
+            "id": "my-extension-health-chart-panel",
+            "target": "health-chart-bottom",
+            "label": "图表旁摘要",
+            "icon": "puzzle",
+            "commandId": "open-my-extension-workspace"
+          }
+        ],
+        "workspaceHeaderActions": [
+          {
+            "id": "my-extension-open-settings",
+            "label": "接入说明",
+            "icon": "circle-help",
+            "commandId": "open-extension-settings",
+            "variant": "ghost"
+          },
+          {
+            "id": "my-extension-open-ai",
+            "label": "去 AI",
+            "icon": "message-square-plus",
+            "commandId": "open-ai-chat",
+            "variant": "ghost"
+          }
+        ],
+        "settingsSection": {
+          "id": "my-extension-settings",
+          "label": "我的扩展设置",
+          "icon": "puzzle",
+          "commandId": "open-extension-settings"
+        },
+        "createdItemTargets": []
+      },
+      "dataModel": {
+        "namespace": "my-local-plugin",
+        "state": "root-pluginData",
+        "history": "none",
+        "syncPolicy": "inherit-root",
+        "sharedDomains": []
+      },
+      "defaultEnabled": false,
+      "requiresConfiguration": false,
+      "ui": {
+        "detailMode": "embedded",
+        "primaryAction": "open-workspace",
+        "workspaceShell": {
+          "eyebrow": "本地扩展工作台",
+          "title": "我的本地扩展",
+          "description": "这是一个最小可跑通的本地扩展示例，用来验证 Morpheus 的自定义扩展接入方式。",
+          "backLabel": "返回扩展中心"
+        }
+      },
+      "requires": {
+        "accounts": [],
+        "devices": [],
+        "runtimeCapabilities": ["workspace-tab"]
+      },
+      "permissions": [
+        {
+          "id": "ui.mount.workspace",
+          "label": "挂载工作台页面",
+          "required": true,
+          "scope": "ui"
+        }
+      ],
+      "commands": [
+        {
+          "id": "open-my-extension-workspace",
+          "label": "打开工作台",
+          "icon": "puzzle",
+          "action": "open-workspace"
+        },
+        {
+          "id": "open-extension-settings",
+          "label": "接入说明",
+          "icon": "circle-help",
+          "action": "open-settings"
+        },
+        {
+          "id": "open-ai-chat",
+          "label": "去 AI",
+          "icon": "message-square-plus",
+          "action": "switch-tab",
+          "target": "ai"
+        }
+      ]
+    }
+  ]
+}

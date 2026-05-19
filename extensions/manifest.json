@@ -1,0 +1,535 @@
+{
+  "version": 2,
+  "updatedAt": "2026-05-02",
+  "extensions": [
+    {
+      "id": "fleeting-station",
+      "kind": "workspace",
+      "source": "official",
+      "name": "闪念坞",
+      "summary": "右侧抽屉工作台，用来暂存、搜索和重组闪念",
+      "icon": "git-branch",
+      "entry": "extensions/fleeting-station/manifest.json",
+      "description": "这是 Morpheus 的右侧闪念中转工作台。它适合在不离开当前页面的情况下，快速搜索闪念、拖拽分组、把想法重新送进项目或定念。",
+      "category": "workspace",
+      "owner": "official",
+      "tags": [
+        "flash-thoughts",
+        "drawer",
+        "workspace",
+        "official"
+      ],
+      "settingsTarget": "fleeting-station",
+      "visibilityTargets": [
+        "drawer",
+        "sidebar-footer"
+      ],
+      "hostIntegration": {
+        "platforms": [
+          "desktop"
+        ],
+        "entryCommandId": "toggle-fleeting-drawer",
+        "drawerEntry": {
+          "drawerId": "fleeting",
+          "label": "闪念坞",
+          "icon": "git-branch",
+          "platforms": [
+            "desktop"
+          ]
+        },
+        "sidebarFooterEntry": {
+          "label": "闪念坞",
+          "icon": "git-branch",
+          "platforms": [
+            "desktop"
+          ]
+        },
+        "mobileMoreEntry": {
+          "label": "闪念坞",
+          "icon": "git-branch",
+          "platforms": [
+            "mobile"
+          ]
+        }
+      },
+      "dataModel": {
+        "namespace": "fleeting-station",
+        "state": "shared-domain",
+        "stateKey": "flashThoughts",
+        "history": "root-inline",
+        "syncPolicy": "inherit-root",
+        "sharedDomains": [
+          "flashThoughts",
+          "fixedThoughts"
+        ]
+      },
+      "defaultEnabled": true,
+      "requiresConfiguration": false,
+      "ui": {
+        "detailMode": "embedded",
+        "primaryAction": "open-drawer"
+      },
+      "requires": {
+        "accounts": [],
+        "devices": [],
+        "runtimeCapabilities": [
+          "workspace-drawer",
+          "flash-thoughts"
+        ]
+      },
+      "permissions": [
+        {
+          "id": "ui.mount.drawer",
+          "label": "显示右侧抽屉工作台",
+          "required": true,
+          "scope": "ui"
+        },
+        {
+          "id": "data.read.flash-thoughts",
+          "label": "读取闪念与分组",
+          "required": true,
+          "scope": "data"
+        }
+      ],
+      "commands": [
+        {
+          "id": "toggle-fleeting-drawer",
+          "label": "切换闪念坞",
+          "icon": "git-branch",
+          "action": "open-drawer",
+          "target": "fleeting"
+        }
+      ]
+    },
+    {
+      "id": "health-state",
+      "kind": "workspace",
+      "source": "official",
+      "name": "健康状态",
+      "summary": "基于日志、对话和节律线索生成的状态画布",
+      "icon": "heart-pulse",
+      "entry": "extensions/manifest.json",
+      "description": "这是健康状态扩展，用来把身体、节律、关系和自我状态重新编排成更贴近当下的健康画布。它不依赖固定卡片，而是优先呈现今天真正值得被看见的状态线索。",
+      "category": "workspace",
+      "owner": "official",
+      "tags": [
+        "health",
+        "state",
+        "canvas",
+        "official"
+      ],
+      "settingsTarget": "health-state",
+      "visibilityTargets": [
+        "health-tab",
+        "health-view"
+      ],
+      "hostIntegration": {
+        "entryCommandId": "open-health-state-workspace",
+        "workspaceHeaderActions": [
+          {
+            "id": "health-state-open-ai",
+            "label": "去 AI 说说",
+            "icon": "message-circle-heart",
+            "commandId": "open-ai-chat",
+            "variant": "ghost"
+          },
+          {
+            "id": "health-state-open-health",
+            "label": "去健康页",
+            "icon": "heart-pulse",
+            "commandId": "open-health-tab",
+            "variant": "ghost"
+          }
+        ]
+      },
+      "dataModel": {
+        "namespace": "health-state",
+        "state": "shared-domain",
+        "stateKey": "healthStateCanvas",
+        "history": "none",
+        "syncPolicy": "inherit-root",
+        "sharedDomains": [
+          "dailyMonths",
+          "flashThoughts",
+          "fixedThoughts",
+          "projects",
+          "glucoseSync"
+        ]
+      },
+      "defaultEnabled": true,
+      "requiresConfiguration": false,
+      "ui": {
+        "detailMode": "embedded",
+        "primaryAction": "open-workspace",
+        "workspaceShell": {
+          "eyebrow": "官方扩展工作台",
+          "title": "健康状态",
+          "description": "把身体、节律、关系和自我状态重新编排成更贴近当下的健康画布。",
+          "backLabel": "返回扩展中心"
+        }
+      },
+      "requires": {
+        "accounts": [],
+        "devices": [],
+        "runtimeCapabilities": [
+          "health-view",
+          "ai-context",
+          "daily-analysis"
+        ]
+      },
+      "permissions": [
+        {
+          "id": "health.read.context",
+          "label": "读取日志、对话与健康上下文",
+          "required": true,
+          "scope": "health",
+          "aiReadable": true
+        },
+        {
+          "id": "ui.mount.health-state",
+          "label": "显示健康状态入口与工作台",
+          "required": true,
+          "scope": "ui"
+        }
+      ],
+      "commands": [
+        {
+          "id": "open-health-state-workspace",
+          "label": "打开健康状态工作台",
+          "icon": "heart-pulse",
+          "action": "open-workspace"
+        },
+        {
+          "id": "open-ai-chat",
+          "label": "去 AI 说说",
+          "icon": "message-circle-heart",
+          "action": "switch-tab",
+          "target": "ai"
+        },
+        {
+          "id": "open-health-tab",
+          "label": "打开健康页",
+          "icon": "heart-pulse",
+          "action": "switch-tab",
+          "target": "health"
+        }
+      ]
+    },
+    {
+      "id": "glucose",
+      "kind": "integration",
+      "source": "official",
+      "name": "LibreLink 血糖数据",
+      "summary": "高门槛健康集成，按需启用",
+      "icon": "activity",
+      "entry": "scripts/connectors/glucose-api.js",
+      "description": "这个扩展是给已经在用动态血糖仪的人准备的，不是所有人都需要。\n启用后，Morpheus 才会显示健康页，并且在你讨论血糖、饮食、状态波动时，把实时血糖数据带进上下文。\n如果你没有 LibreLink 账号、也没有佩戴 CGM，就完全不必打开它。",
+      "category": "integration",
+      "owner": "official",
+      "tags": [
+        "health",
+        "glucose",
+        "librelink",
+        "official"
+      ],
+      "settingsTarget": "glucose",
+      "visibilityTargets": [
+        "health-tab",
+        "health-view",
+        "glucose-settings"
+      ],
+      "hostIntegration": {
+        "entryCommandId": "open-glucose-workspace",
+        "aiContextProviderId": "glucose",
+        "contextPanels": [],
+        "workspaceHeaderActions": [
+          {
+            "id": "glucose-open-settings",
+            "label": "配置",
+            "icon": "settings-2",
+            "commandId": "open-extension-settings",
+            "variant": "ghost"
+          },
+          {
+            "id": "glucose-open-health",
+            "label": "去健康页",
+            "icon": "heart-pulse",
+            "commandId": "open-health-tab",
+            "variant": "ghost"
+          }
+        ],
+        "settingsSection": {
+          "id": "glucose-settings-section",
+          "label": "血糖扩展",
+          "icon": "activity",
+          "commandId": "open-extension-settings"
+        }
+      },
+      "dataModel": {
+        "namespace": "glucose",
+        "state": "shared-domain",
+        "stateKey": "glucoseSync",
+        "history": "file-backed",
+        "syncPolicy": "inherit-root",
+        "sharedDomains": [
+          "glucoseSync",
+          "glucoseHistoryArchive"
+        ]
+      },
+      "defaultEnabled": true,
+      "requiresConfiguration": true,
+      "ui": {
+        "detailMode": "embedded",
+        "primaryAction": "open-workspace",
+        "workspaceShell": {
+          "eyebrow": "官方扩展工作台",
+          "title": "LibreLink 血糖数据",
+          "description": "这是血糖扩展自己的工作区和配置入口，用来管理账户、目标范围和健康上下文接入。",
+          "backLabel": "返回扩展中心"
+        }
+      },
+      "requires": {
+        "accounts": [
+          "LibreLink"
+        ],
+        "devices": [
+          "CGM"
+        ],
+        "runtimeCapabilities": [
+          "health-tab",
+          "health-context"
+        ]
+      },
+      "permissions": [
+        {
+          "id": "health.read.glucose",
+          "label": "读取血糖同步数据",
+          "required": true,
+          "scope": "health",
+          "aiReadable": true
+        },
+        {
+          "id": "ui.mount.health",
+          "label": "显示健康页入口",
+          "required": true,
+          "scope": "ui"
+        }
+      ],
+      "commands": [
+        {
+          "id": "open-glucose-workspace",
+          "label": "打开血糖工作台",
+          "icon": "activity",
+          "action": "open-workspace"
+        },
+        {
+          "id": "open-extension-settings",
+          "label": "打开血糖设置",
+          "icon": "activity",
+          "action": "open-settings"
+        },
+        {
+          "id": "open-health-tab",
+          "label": "打开健康页",
+          "icon": "heart-pulse",
+          "action": "switch-tab",
+          "target": "health"
+        }
+      ]
+    },
+    {
+      "id": "apple-health",
+      "kind": "integration",
+      "source": "official",
+      "name": "Apple 健康（HealthKit）",
+      "summary": "在 iPhone 上读取 HealthKit 摘要，并同步到 Morpheus 健康视图与 AI 上下文",
+      "icon": "heart-pulse",
+      "entry": "extensions/apple-health/manifest.json",
+      "description": "这个扩展会在 Morpheus iOS 原生壳内通过 HealthKit 读取步数、活动能量、心率、睡眠、体重与血糖等摘要，并把结果同步进 Morpheus。\n配置入口只保留授权和同步动作；详细数据请在健康页或 Apple 健康详情工作台查看。",
+      "category": "integration",
+      "owner": "official",
+      "tags": [
+        "health",
+        "apple-health",
+        "healthkit",
+        "ios",
+        "official"
+      ],
+      "settingsTarget": "apple-health",
+      "visibilityTargets": [
+        "health-tab",
+        "health-view",
+        "apple-health-settings"
+      ],
+      "hostIntegration": {
+        "entryCommandId": "open-apple-health-workspace",
+        "aiContextProviderId": "apple-health",
+        "workspaceHeaderActions": [
+          {
+            "id": "apple-health-open-settings",
+            "label": "配置",
+            "icon": "settings-2",
+            "commandId": "open-extension-settings",
+            "variant": "ghost"
+          },
+          {
+            "id": "apple-health-open-health",
+            "label": "去健康页",
+            "icon": "heart-pulse",
+            "commandId": "open-health-tab",
+            "variant": "ghost"
+          }
+        ],
+        "settingsSection": {
+          "id": "apple-health-settings-section",
+          "label": "Apple 健康",
+          "icon": "heart-pulse",
+          "commandId": "open-extension-settings"
+        }
+      },
+      "dataModel": {
+        "namespace": "apple-health",
+        "state": "shared-domain",
+        "stateKey": "appleHealthSync",
+        "history": "none",
+        "syncPolicy": "inherit-root",
+        "sharedDomains": [
+          "appleHealthSync"
+        ]
+      },
+      "defaultEnabled": false,
+      "requiresConfiguration": true,
+      "ui": {
+        "detailMode": "embedded",
+        "primaryAction": "open-workspace",
+        "workspaceShell": {
+          "eyebrow": "官方扩展工作台",
+          "title": "Apple 健康",
+          "description": "查看从 HealthKit 同步到 Morpheus 的活动、心率、睡眠与生理摘要。",
+          "backLabel": "返回扩展中心"
+        }
+      },
+      "requires": {
+        "accounts": [],
+        "devices": [
+          "iPhone"
+        ],
+        "runtimeCapabilities": [
+          "health-view",
+          "ios-native-bridge"
+        ]
+      },
+      "permissions": [
+        {
+          "id": "health.read.apple-health",
+          "label": "读取 Apple Health / HealthKit 摘要",
+          "required": true,
+          "scope": "health",
+          "aiReadable": true
+        },
+        {
+          "id": "ui.mount.health",
+          "label": "显示 Apple 健康入口与详情",
+          "required": true,
+          "scope": "ui"
+        }
+      ],
+      "commands": [
+        {
+          "id": "open-apple-health-workspace",
+          "label": "打开 Apple 健康详情",
+          "icon": "heart-pulse",
+          "action": "open-workspace"
+        },
+        {
+          "id": "open-extension-settings",
+          "label": "打开 Apple 健康配置",
+          "icon": "settings-2",
+          "action": "open-settings"
+        },
+        {
+          "id": "open-health-tab",
+          "label": "打开健康页",
+          "icon": "heart-pulse",
+          "action": "switch-tab",
+          "target": "health"
+        }
+      ]
+    },
+    {
+      "id": "feishu",
+      "kind": "integration",
+      "source": "official",
+      "name": "飞书机器人",
+      "summary": "飞书消息入口与消息同步",
+      "icon": "bot",
+      "entry": "scripts/connectors/feishu-api.js",
+      "description": "这个扩展用来把飞书里的消息入口接到 Morpheus。\n适合已经在飞书里工作的团队、或者你想把机器人消息、Webhook 事件接进来统一处理的时候使用。\n如果你平时不用飞书协作，它就不需要出现在你的主界面里。",
+      "category": "integration",
+      "owner": "official",
+      "tags": [
+        "feishu",
+        "bot",
+        "integration",
+        "official"
+      ],
+      "settingsTarget": "feishu",
+      "visibilityTargets": [
+        "feishu-settings"
+      ],
+      "hostIntegration": {
+        "settingsSection": {
+          "id": "feishu-settings-section",
+          "label": "飞书机器人",
+          "icon": "bot",
+          "commandId": "open-extension-settings"
+        }
+      },
+      "dataModel": {
+        "namespace": "feishu",
+        "state": "root-pluginData",
+        "history": "file-backed",
+        "syncPolicy": "local-only",
+        "sharedDomains": []
+      },
+      "defaultEnabled": false,
+      "requiresConfiguration": true,
+      "ui": {
+        "detailMode": "embedded",
+        "primaryAction": "configure"
+      },
+      "requires": {
+        "accounts": [
+          "Feishu"
+        ],
+        "devices": [],
+        "runtimeCapabilities": [
+          "webhook",
+          "message-ingest"
+        ]
+      },
+      "permissions": [
+        {
+          "id": "network.webhook.feishu",
+          "label": "接收飞书 Webhook",
+          "required": true,
+          "scope": "webhook"
+        },
+        {
+          "id": "data.write.message-ingest",
+          "label": "写入消息接入事件",
+          "required": true,
+          "scope": "data"
+        }
+      ],
+      "commands": [
+        {
+          "id": "open-extension-settings",
+          "label": "打开飞书配置",
+          "icon": "settings-2",
+          "action": "open-settings"
+        }
+      ]
+    }
+  ]
+}

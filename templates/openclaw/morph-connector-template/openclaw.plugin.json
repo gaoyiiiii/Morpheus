@@ -1,0 +1,28 @@
+{
+  "id": "custom-morph-connector",
+  "name": "Custom Morpheus Connector",
+  "description": "Starter template for building a custom OpenClaw connector against Morpheus APIs.",
+  "version": "0.1.0",
+  "skills": [
+    "./skills"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "baseUrl": {
+        "type": "string",
+        "minLength": 1
+      },
+      "defaultActor": {
+        "type": "string"
+      },
+      "defaultSource": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "baseUrl"
+    ]
+  }
+}
