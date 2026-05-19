@@ -12,7 +12,7 @@ PORT="${MORPHEUS_PORT:-2199}"
 HOST="${MORPHEUS_HOST:-127.0.0.1}"
 
 log() {
-  printf '[morpheus:web-release] %s\n' "$*"
+  printf '[morpheus:web-release] %s\n' "$*" >&2
 }
 
 fail() {
@@ -46,7 +46,7 @@ prepare_common_payload() {
   copy_if_exists "$ROOT_DIR/space-embed.html" "$target_dir/"
   rsync -a --exclude='.DS_Store' "$ROOT_DIR/assets" "$target_dir/"
   rsync -a --exclude='.DS_Store' "$ROOT_DIR/extensions" "$target_dir/"
-  rsync -a --exclude='.DS_Store' "$ROOT_DIR/morph-runtime" "$target_dir/"
+  copy_if_exists "$ROOT_DIR/morph-runtime" "$target_dir/"
   rsync -a \
     --exclude='.DS_Store' \
     --exclude='contracts' \
@@ -179,11 +179,8 @@ package_zip() {
   local target_dir="$1"
   local zip_path="$2"
   rm -f "$zip_path"
-  if command -v ditto >/dev/null 2>&1; then
-    (cd "$(dirname "$target_dir")" && ditto -c -k --sequesterRsrc --keepParent "$(basename "$target_dir")" "$zip_path")
-  else
-    (cd "$(dirname "$target_dir")" && zip -qr "$zip_path" "$(basename "$target_dir")")
-  fi
+  need_cmd zip
+  (cd "$(dirname "$target_dir")" && zip -X -qr "$zip_path" "$(basename "$target_dir")")
 }
 
 download_node_windows_x64() {
